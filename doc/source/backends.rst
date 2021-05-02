@@ -169,3 +169,16 @@ The LXC backend can be used to test *running* LXC or LXD containers. It uses the
 `lxc exec <https://linuxcontainers.org/lxd/getting-started-cli/>`_ command::
 
     $ py.test --hosts='lxc://container_name'
+
+aci
+~~~~~~~
+
+The aci backend can be used to test containers running as Azure Container Instances.  It
+uses the `az container exec <https://docs.microsoft.com/en-us/azure/container-instances/container-instances-exec>`_ command and
+support connecting to a given container name within a pod and using a given
+namespace::
+
+    # will use the default container in the group
+    $ py.test --hosts='aci://myContainerGroup@myResourceGroup'
+    # specify container name
+    $ py.test --hosts='aci://myContainerGroup@myResourceGroup?container=app'

@@ -28,6 +28,7 @@ BACKENDS = {
     "winrm": "testinfra.backend.winrm.WinRMBackend",
     "lxc": "testinfra.backend.lxc.LxcBackend",
     "openshift": "testinfra.backend.openshift.OpenShiftBackend",
+    "aci": "testinfra.backend.aci.AciBackend",
 }
 
 
