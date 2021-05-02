@@ -14,6 +14,7 @@ import abc
 import collections
 import locale
 import logging
+import pty
 import shlex
 import subprocess
 import urllib.parse
@@ -123,6 +124,8 @@ class BaseBackend(metaclass=abc.ABCMeta):
         self.hostname = hostname
         self.sudo = sudo
         self.sudo_user = sudo_user
+        # ioctl error fix: https://vanducuy.wordpress.com/2019/11/13/popen-python3-trick-with-terminal/
+        unused_fd, self.stdin_fd = pty.openpty()
         super().__init__()
 
     def set_host(self, host):
@@ -202,7 +205,7 @@ class BaseBackend(metaclass=abc.ABCMeta):
         p = subprocess.Popen(
             command,
             shell=True,
-            stdin=subprocess.PIPE,
+            stdin=self.stdin_fd,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
         )
