@@ -631,3 +631,20 @@ def test_get_hosts():
         ("a", 10),
         ("a", 1),
     ]
+
+
+@pytest.mark.parametrize(
+    "hostspec,container_group,container",
+    [
+        ("aci://myContainerGroup@myResourceGroup", "myContainerGroup@myResourceGroup", None),
+        ("aci://myContainerGroup@myResourceGroup?container=c", "myContainerGroup@myResourceGroup", "c"),
+    ],
+)
+def test_aci_hostspec(
+    hostspec,
+    container_group,
+    container,
+):
+    backend = testinfra.get_host(hostspec).backend
+    assert backend.name == container_group
+    assert backend.container == container
